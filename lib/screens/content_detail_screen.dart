@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import '../models/wp_content_item.dart';
+import '../widgets/responsive_html.dart';
 
 class ContentDetailScreen extends StatelessWidget {
   final WpContentItem item;
@@ -13,7 +13,7 @@ class ContentDetailScreen extends StatelessWidget {
       appBar: AppBar(title: Text(item.title)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child: Html(data: item.htmlContent),
+        child: ResponsiveHtml(data: item.htmlContent),
       ),
     );
   }

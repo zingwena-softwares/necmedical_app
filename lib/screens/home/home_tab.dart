@@ -9,6 +9,7 @@ import '../../widgets/skeleton_loaders.dart';
 import '../about_screen.dart';
 import '../contact_screen.dart';
 import '../content_detail_screen.dart';
+import '../document_list_screen.dart';
 import '../employer_portal_screen.dart';
 import '../gallery_screen.dart';
 import '../home_screen.dart';
@@ -39,6 +40,8 @@ class HomeTab extends ConsumerWidget {
               _ServicePortalsRow(),
               SizedBox(height: 16),
               _UpcomingHearingsRow(),
+              SizedBox(height: 12),
+              _ZoomMeetingsRow(),
               SizedBox(height: 24),
               _LatestInsightsSection(),
               SizedBox(height: 20),
@@ -90,7 +93,7 @@ class _HomeHeader extends StatelessWidget {
                   style: TextStyle(fontSize: 21, fontWeight: FontWeight.w800, color: AppColors.navy),
                 ),
                 Text(
-                  'National Employment Council\nfor the Medical and Allied Industry',
+                  'And Allied Industry',
                   style: TextStyle(fontSize: 10.5, height: 1.3, color: colorScheme.onSurfaceVariant),
                 ),
               ],
@@ -191,8 +194,13 @@ class _HeroBanner extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Working together for\nfair labour relations and\na healthier industry.',
+              'Creating a Just and\nDemocratic Workplace',
               style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800, height: 1.35),
+            ),
+            const SizedBox(height: 6),
+            const Text(
+              'Advancing social justice and democracy\nin the workplace',
+              style: TextStyle(color: Colors.white70, fontSize: 12.5, fontWeight: FontWeight.w500, height: 1.35),
             ),
             const SizedBox(height: 10),
             Container(width: 36, height: 3, decoration: BoxDecoration(color: AppColors.teal, borderRadius: BorderRadius.circular(2))),
@@ -203,7 +211,7 @@ class _HeroBanner extends StatelessWidget {
                   child: _heroPortalButton(
                     context,
                     iconAsset: 'assets/icons/employee_portal_icon.png',
-                    title: 'Employer Portal',
+                    title: 'Login',
                     subtitle: 'Manage your business\nand employees',
                     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const EmployerPortalScreen())),
                   ),
@@ -299,12 +307,22 @@ class _QuickActionsSection extends ConsumerWidget {
             children: [
               Expanded(
                 child: _QuickActionCard(
-                  iconAsset: 'assets/icons/notice_icon.png',
+                  icon: Icons.handshake_rounded,
                   iconBg: AppColors.iconBgLavender,
                   iconColor: AppColors.iconLavender,
-                  label: 'Notices',
-                  subtitle: 'Latest updates\nand circulars',
-                  onTap: () => HomeScreen.of(context)?.setCurrentIndex(HomeNavigation.noticesIndex),
+                  label: 'CBA',
+                  subtitle: 'Bargaining\nAgreement',
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => DocumentListScreen(
+                        appBarTitle: 'CBA',
+                        badgeLabel: 'CBA',
+                        pageProvider: cbaPageProvider,
+                        contentProvider: cbaContentProvider,
+                      ),
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(width: 10),
@@ -349,7 +367,8 @@ class _QuickActionsSection extends ConsumerWidget {
 }
 
 class _QuickActionCard extends StatelessWidget {
-  final String iconAsset;
+  final String? iconAsset;
+  final IconData? icon;
   final Color iconBg;
   final Color iconColor;
   final String label;
@@ -357,13 +376,14 @@ class _QuickActionCard extends StatelessWidget {
   final VoidCallback onTap;
 
   const _QuickActionCard({
-    required this.iconAsset,
+    this.iconAsset,
+    this.icon,
     required this.iconBg,
     required this.iconColor,
     required this.label,
     required this.subtitle,
     required this.onTap,
-  });
+  }) : assert(iconAsset != null || icon != null);
 
   @override
   Widget build(BuildContext context) {
@@ -387,7 +407,11 @@ class _QuickActionCard extends StatelessWidget {
                 width: 44,
                 height: 44,
                 decoration: BoxDecoration(color: iconBg, shape: BoxShape.circle),
-                child: Center(child: AppAssetIcon(iconAsset, size: 20, color: iconColor)),
+                child: Center(
+                  child: iconAsset != null
+                      ? AppAssetIcon(iconAsset!, size: 20, color: iconColor)
+                      : Icon(icon, size: 20, color: iconColor),
+                ),
               ),
               const SizedBox(height: 8),
               Text(label,
@@ -740,6 +764,69 @@ class _UpcomingHearingsRow extends StatelessWidget {
                   ),
                 ),
                 Icon(Icons.chevron_right_rounded, size: 20, color: colorScheme.onSurfaceVariant),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ZOOM MEETINGS — coming soon
+// ═══════════════════════════════════════════════════════════════
+class _ZoomMeetingsRow extends StatelessWidget {
+  const _ZoomMeetingsRow();
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Material(
+        color: colorScheme.surface,
+        borderRadius: BorderRadius.circular(16),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () => ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Zoom integration coming soon')),
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.4)),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            child: Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: const BoxDecoration(color: AppColors.iconBgBlue, shape: BoxShape.circle),
+                  child: const Icon(Icons.videocam_rounded, size: 19, color: AppColors.iconBlue),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Zoom Meetings',
+                          style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: colorScheme.onSurface)),
+                      const SizedBox(height: 2),
+                      Text('Join hearings and meetings directly',
+                          style: TextStyle(fontSize: 11, color: colorScheme.onSurfaceVariant)),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
+                  decoration: BoxDecoration(color: AppColors.iconBgBlue, borderRadius: BorderRadius.circular(8)),
+                  child: const Text(
+                    'COMING SOON',
+                    style: TextStyle(fontSize: 9, fontWeight: FontWeight.w700, color: AppColors.iconBlue, letterSpacing: 0.3),
+                  ),
+                ),
               ],
             ),
           ),

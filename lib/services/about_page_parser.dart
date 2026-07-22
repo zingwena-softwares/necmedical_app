@@ -44,7 +44,9 @@ AboutContent parseAboutContent(String htmlContent) {
       final next = heading.parent?.nextElementSibling;
       final paragraphs = next?.querySelectorAll('p') ?? [];
       if (paragraphs.isNotEmpty) {
-        backgroundText = paragraphs.map((p) => p.text.trim()).join('\n\n');
+        // Keep this to just 1-2 paragraphs — mobile users want the Vision/
+        // Mission/Values and the "Learn More" link, not the full website copy.
+        backgroundText = paragraphs.take(2).map((p) => p.text.trim()).join('\n\n');
       }
       break;
     }

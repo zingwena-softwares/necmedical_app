@@ -1,5 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Pre-Android 10 only — DownloadManager (used by flutter_file_downloader
+         to save documents to the public Downloads folder) needs this on API<=28;
+         on API 29+ scoped storage exempts DownloadManager, hence maxSdkVersion. -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28"/>
     <application
         android:label="Medical NEC"
         android:name="${applicationName}"

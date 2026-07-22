@@ -238,6 +238,22 @@ class ShimmerDialogLoader extends StatelessWidget {
   }
 }
 
+/// Placeholder for an in-content <img> while it loads over the network —
+/// used inside notice/content HTML bodies (ResponsiveHtml) instead of a bare
+/// spinner.
+class ContentImageSkeleton extends StatelessWidget {
+  final double width;
+  final double height;
+  const ContentImageSkeleton({super.key, required this.width, this.height = 180});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppShimmer(
+      child: ShimmerBox(width: width, height: height, borderRadius: BorderRadius.circular(10)),
+    );
+  }
+}
+
 /// Generic full-page skeleton for the Employer Portal / Self Service WebView
 /// screens while the external page is loading — mimics a simple page layout
 /// (header bar + content blocks) rather than a bare spinner.

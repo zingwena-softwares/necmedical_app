@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import '../core/app_colors.dart';
 import '../core/app_icon.dart';
 import '../models/wp_content_item.dart';
+import '../widgets/responsive_html.dart';
 
 class NoticeDetailScreen extends StatelessWidget {
   final WpContentItem item;
@@ -43,7 +43,7 @@ class NoticeDetailScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            Html(data: item.htmlContent),
+            ResponsiveHtml(data: item.htmlContent),
           ],
         ),
       ),

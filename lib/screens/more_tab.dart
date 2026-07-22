@@ -7,6 +7,7 @@ import '../widgets/skeleton_loaders.dart';
 import 'about_screen.dart';
 import 'contact_screen.dart';
 import 'content_detail_screen.dart';
+import 'document_list_screen.dart';
 import 'gallery_screen.dart';
 
 class MoreTab extends ConsumerWidget {
@@ -14,11 +15,53 @@ class MoreTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
+      backgroundColor: colorScheme.surfaceContainerLowest,
       appBar: AppBar(title: const Text('More')),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 28),
         children: [
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(colors: [AppColors.navy, AppColors.navyLight]),
+              borderRadius: BorderRadius.circular(18),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 44,
+                  height: 44,
+                  decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                  child: ClipOval(
+                    child: Padding(
+                      padding: const EdgeInsets.all(6),
+                      child: Image.asset('assets/images/nec_logo.png', fit: BoxFit.contain),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 14),
+                const Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('More from NEC Medical', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w800)),
+                      SizedBox(height: 3),
+                      Text(
+                        'Explore, download and get in touch',
+                        style: TextStyle(color: Colors.white70, fontSize: 11.5),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 24),
+          _SectionLabel('Explore'),
+          const SizedBox(height: 10),
           _MoreRow(
             iconAsset: 'assets/icons/gallery_icon.png',
             iconBg: AppColors.iconBgViolet,
@@ -43,14 +86,26 @@ class MoreTab extends ConsumerWidget {
             subtitle: 'Who we are and what we do',
             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const AboutScreen())),
           ),
-          const Divider(height: 32),
+          const SizedBox(height: 22),
+          _SectionLabel('Documents & Services'),
+          const SizedBox(height: 10),
           _MoreRow(
             icon: Icons.description_rounded,
             iconBg: AppColors.iconBgLavender,
             iconColor: AppColors.iconLavender,
             label: 'Collective Bargaining Agreement',
             subtitle: 'CBA documents',
-            onTap: () => _openBySlug(context, ref, 'cba'),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => DocumentListScreen(
+                  appBarTitle: 'CBA',
+                  badgeLabel: 'CBA',
+                  pageProvider: cbaPageProvider,
+                  contentProvider: cbaContentProvider,
+                ),
+              ),
+            ),
           ),
           _MoreRow(
             icon: Icons.how_to_reg_rounded,
@@ -58,7 +113,17 @@ class MoreTab extends ConsumerWidget {
             iconColor: AppColors.iconLavender,
             label: 'Registration',
             subtitle: 'How to register with NEC',
-            onTap: () => _openBySlug(context, ref, 'registration'),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => DocumentListScreen(
+                  appBarTitle: 'Registration',
+                  badgeLabel: 'REGISTRATION',
+                  pageProvider: registrationPageProvider,
+                  contentProvider: registrationContentProvider,
+                ),
+              ),
+            ),
           ),
           _MoreRow(
             icon: Icons.work_outline_rounded,
@@ -98,6 +163,27 @@ class MoreTab extends ConsumerWidget {
   }
 }
 
+class _SectionLabel extends StatelessWidget {
+  final String label;
+  const _SectionLabel(this.label);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4),
+      child: Text(
+        label,
+        style: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.6,
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
+      ),
+    );
+  }
+}
+
 class _MoreRow extends StatelessWidget {
   final IconData? icon;
   final String? iconAsset;
@@ -121,43 +207,51 @@ class _MoreRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.only(bottom: 12),
       child: Material(
         color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(18),
         child: InkWell(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(18),
           onTap: onTap,
           child: Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 2))],
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: iconBg, width: 1.2),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 12, offset: const Offset(0, 3)),
+              ],
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
             child: Row(
               children: [
                 Container(
-                  width: 40,
-                  height: 40,
+                  width: 46,
+                  height: 46,
                   decoration: BoxDecoration(color: iconBg, shape: BoxShape.circle),
                   child: Center(
                     child: iconAsset != null
-                        ? AppAssetIcon(iconAsset!, size: 19, color: iconColor)
-                        : Icon(icon, size: 19, color: iconColor),
+                        ? AppAssetIcon(iconAsset!, size: 21, color: iconColor)
+                        : Icon(icon, size: 21, color: iconColor),
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 14),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(label, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: colorScheme.onSurface)),
-                      const SizedBox(height: 2),
+                      Text(label, style: TextStyle(fontSize: 14.5, fontWeight: FontWeight.w700, color: colorScheme.onSurface)),
+                      const SizedBox(height: 3),
                       Text(subtitle, style: TextStyle(fontSize: 11.5, color: colorScheme.onSurfaceVariant)),
                     ],
                   ),
                 ),
-                Icon(Icons.chevron_right_rounded, size: 20, color: colorScheme.onSurfaceVariant),
+                Container(
+                  width: 30,
+                  height: 30,
+                  decoration: BoxDecoration(color: iconBg, shape: BoxShape.circle),
+                  child: Icon(Icons.chevron_right_rounded, size: 18, color: iconColor),
+                ),
               ],
             ),
           ),

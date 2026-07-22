@@ -58,11 +58,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                     const SizedBox(height: 20),
                     const Text(
                       'NEC Medical',
-                      style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w800),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w800),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'National Employment Council\nfor the Medical and\nAllied Industry',
+                      'And Allied Industry',
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.white.withValues(alpha: 0.75), fontSize: 12.5, height: 1.4),
                     ),
@@ -88,7 +89,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                   ),
                   const SizedBox(height: 14),
                   Text(
-                    'Building fair labour relations for a healthier industry',
+                    'Creating a Just and Democratic Workplace',
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.white.withValues(alpha: 0.6), fontSize: 11),
                   ),

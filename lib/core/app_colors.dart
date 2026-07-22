@@ -10,17 +10,17 @@ class AppColors {
 
   static const navy = Color(0xFF152452);
   static const navyLight = Color(0xFF223B7A);
-  static const teal = Color(0xFF12A28D);
-  static const tealDark = Color(0xFF0C8577);
+  static const teal = Color(0xFF1CA8DE);
+  static const tealDark = Color(0xFF0F86B8);
 
-  static const noticeCardBg = Color(0xFFE6F6F3);
+  static const noticeCardBg = Color(0xFFE3F1FB);
   static const aboutCardBg = Color(0xFFF1F1F6);
 
   static const iconBgLavender = Color(0xFFEDEAFB);
   static const iconLavender = Color(0xFF6C63FF);
 
-  static const iconBgTeal = Color(0xFFDAF5F0);
-  static const iconTeal = Color(0xFF12A28D);
+  static const iconBgTeal = Color(0xFFDCEEFA);
+  static const iconTeal = Color(0xFF1CA8DE);
 
   static const iconBgViolet = Color(0xFFF1E6FA);
   static const iconViolet = Color(0xFF9B51E0);
