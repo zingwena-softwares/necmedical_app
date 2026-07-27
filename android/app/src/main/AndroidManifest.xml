@@ -57,5 +57,11 @@
             <action android:name="android.intent.action.VIEW"/>
             <data android:scheme="http"/>
         </intent>
+        <!-- Zoom's own client URI scheme — lets url_launcher detect the
+             installed Zoom app and hand off Start/Join actions to it directly. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="zoommtg"/>
+        </intent>
     </queries>
 </manifest>

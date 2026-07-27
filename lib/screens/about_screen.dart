@@ -37,7 +37,7 @@ class AboutScreen extends ConsumerWidget {
                     decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
                     child: ClipOval(
                       child: Padding(
-                        padding: const EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(2),
                         child: Image.asset('assets/images/nec_logo.png', fit: BoxFit.contain),
                       ),
                     ),
@@ -79,11 +79,7 @@ class AboutScreen extends ConsumerWidget {
                     if (content.vision != null)
                       _InfoCard(icon: Icons.visibility_outlined, title: 'Our Vision', body: content.vision!),
                     if (content.values.isNotEmpty)
-                      _InfoCard(
-                        icon: Icons.favorite_border_rounded,
-                        title: 'Our Values',
-                        body: content.values.join('  ·  '),
-                      ),
+                      _ValuesCard(values: content.values),
                     if (content.backgroundText != null) ...[
                       const SizedBox(height: 8),
                       Text('Background', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: colorScheme.onSurface)),
@@ -119,6 +115,59 @@ class AboutScreen extends ConsumerWidget {
       ),
       error: (e, __) => Text('$e'),
       data: (page) => page == null ? const Text('About page is unavailable right now.') : Html(data: page.htmlContent),
+    );
+  }
+}
+
+class _ValuesCard extends StatelessWidget {
+  final List<String> values;
+  const _ValuesCard({required this.values});
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.4)),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 36,
+            height: 36,
+            decoration: const BoxDecoration(color: AppColors.iconBgTeal, shape: BoxShape.circle),
+            child: const Icon(Icons.diamond_outlined, size: 18, color: AppColors.iconTeal),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Our Values', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: colorScheme.onSurface)),
+                const SizedBox(height: 6),
+                for (final value in values)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 4),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('•  ', style: TextStyle(fontSize: 12, height: 1.4, color: colorScheme.onSurfaceVariant)),
+                        Expanded(
+                          child: Text(value, style: TextStyle(fontSize: 12, height: 1.4, color: colorScheme.onSurfaceVariant)),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

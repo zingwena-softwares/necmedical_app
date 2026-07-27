@@ -14,6 +14,7 @@ import '../employer_portal_screen.dart';
 import '../gallery_screen.dart';
 import '../home_screen.dart';
 import '../self_service_screen.dart';
+import '../zoom_meeting_screen.dart';
 
 class HomeTab extends ConsumerWidget {
   const HomeTab({super.key});
@@ -77,10 +78,7 @@ class _HomeHeader extends StatelessWidget {
               color: colorScheme.surface,
             ),
             child: ClipOval(
-              child: Padding(
-                padding: const EdgeInsets.all(6),
-                child: Image.asset('assets/images/nec_logo.png', fit: BoxFit.contain),
-              ),
+              child: Image.asset('assets/images/nec_logo_round_white.png', fit: BoxFit.cover),
             ),
           ),
           const SizedBox(width: 12),
@@ -789,9 +787,7 @@ class _ZoomMeetingsRow extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
-          onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Zoom integration coming soon')),
-          ),
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ZoomMeetingScreen())),
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
@@ -814,19 +810,12 @@ class _ZoomMeetingsRow extends StatelessWidget {
                       Text('Zoom Meetings',
                           style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: colorScheme.onSurface)),
                       const SizedBox(height: 2),
-                      Text('Join hearings and meetings directly',
+                      Text('Start or join a meeting',
                           style: TextStyle(fontSize: 11, color: colorScheme.onSurfaceVariant)),
                     ],
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
-                  decoration: BoxDecoration(color: AppColors.iconBgBlue, borderRadius: BorderRadius.circular(8)),
-                  child: const Text(
-                    'COMING SOON',
-                    style: TextStyle(fontSize: 9, fontWeight: FontWeight.w700, color: AppColors.iconBlue, letterSpacing: 0.3),
-                  ),
-                ),
+                Icon(Icons.chevron_right_rounded, size: 20, color: colorScheme.onSurfaceVariant),
               ],
             ),
           ),
@@ -964,12 +953,9 @@ class _AboutCard extends ConsumerWidget {
             Container(
               width: 44,
               height: 44,
-              decoration: const BoxDecoration(color: AppColors.navy, shape: BoxShape.circle),
+              decoration: const BoxDecoration(shape: BoxShape.circle),
               child: ClipOval(
-                child: Padding(
-                  padding: const EdgeInsets.all(6),
-                  child: Image.asset('assets/images/nec_logo.png', fit: BoxFit.contain),
-                ),
+                child: Image.asset('assets/images/nec_logo_round.png', fit: BoxFit.cover),
               ),
             ),
             const SizedBox(width: 12),

@@ -47,5 +47,11 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>zoommtg</string>
+			<string>https</string>
+			<string>http</string>
+		</array>
 	</dict>
 </plist>

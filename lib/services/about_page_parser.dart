@@ -25,8 +25,10 @@ AboutContent parseAboutContent(String htmlContent) {
     } else if (label.toLowerCase() == 'mission' && description != null) {
       mission = description;
     } else if (label.toLowerCase() == 'values') {
-      // The values list sits in a sibling text-editor widget as a <ul><li>.
-      var sibling = box.parent?.nextElementSibling;
+      // The values list sits in a text-editor widget that is a direct sibling
+      // of the icon-box widget itself (both share the same container), as a
+      // <ul><li>.
+      var sibling = box.nextElementSibling ?? box.parent?.nextElementSibling;
       while (sibling != null) {
         final listItems = sibling.querySelectorAll('li');
         if (listItems.isNotEmpty) {

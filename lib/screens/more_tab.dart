@@ -37,7 +37,7 @@ class MoreTab extends ConsumerWidget {
                   decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
                   child: ClipOval(
                     child: Padding(
-                      padding: const EdgeInsets.all(6),
+                      padding: const EdgeInsets.all(2),
                       child: Image.asset('assets/images/nec_logo.png', fit: BoxFit.contain),
                     ),
                   ),
@@ -131,14 +131,14 @@ class MoreTab extends ConsumerWidget {
             iconColor: AppColors.iconLavender,
             label: 'Projects',
             subtitle: 'Ongoing NEC projects',
-            onTap: () => _openBySlug(context, ref, 'projects'),
+            onTap: () => _openBySlug(context, ref, 'projects', badgeLabel: 'PROJECTS'),
           ),
         ],
       ),
     );
   }
 
-  Future<void> _openBySlug(BuildContext context, WidgetRef ref, String slug) async {
+  Future<void> _openBySlug(BuildContext context, WidgetRef ref, String slug, {String? badgeLabel}) async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -149,7 +149,10 @@ class MoreTab extends ConsumerWidget {
       if (!context.mounted) return;
       Navigator.pop(context);
       if (items.isNotEmpty) {
-        Navigator.push(context, MaterialPageRoute(builder: (_) => ContentDetailScreen(item: items.first)));
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => ContentDetailScreen(item: items.first, badgeLabel: badgeLabel)),
+        );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('This page is unavailable right now.')),

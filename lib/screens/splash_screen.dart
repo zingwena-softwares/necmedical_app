@@ -50,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                       ),
                       child: ClipOval(
                         child: Padding(
-                          padding: const EdgeInsets.all(14),
+                          padding: const EdgeInsets.all(5),
                           child: Image.asset('assets/images/nec_logo.png', fit: BoxFit.contain),
                         ),
                       ),
