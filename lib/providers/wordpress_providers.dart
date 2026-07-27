@@ -6,6 +6,7 @@ import '../models/office_contact.dart';
 import '../models/search_result.dart';
 import '../models/wp_content_item.dart';
 import '../services/about_page_parser.dart';
+import '../services/appointment_service.dart';
 import '../services/contact_page_parser.dart';
 import '../services/document_list_parser.dart';
 import '../services/gallery_page_parser.dart';
@@ -13,6 +14,10 @@ import '../services/wordpress_api_service.dart';
 
 final wordpressApiServiceProvider = Provider<WordpressApiService>((ref) {
   return WordpressApiService();
+});
+
+final appointmentServiceProvider = Provider<AppointmentService>((ref) {
+  return AppointmentService();
 });
 
 final noticesProvider = FutureProvider.autoDispose<List<WpContentItem>>((ref) {

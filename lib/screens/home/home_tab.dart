@@ -15,6 +15,7 @@ import '../gallery_screen.dart';
 import '../home_screen.dart';
 import '../self_service_screen.dart';
 import '../zoom_meeting_screen.dart';
+import '../appointment_screen.dart';
 
 class HomeTab extends ConsumerWidget {
   const HomeTab({super.key});
@@ -43,6 +44,8 @@ class HomeTab extends ConsumerWidget {
               _UpcomingHearingsRow(),
               SizedBox(height: 12),
               _ZoomMeetingsRow(),
+              SizedBox(height: 24),
+              _AppointmentSection(),
               SizedBox(height: 24),
               _LatestInsightsSection(),
               SizedBox(height: 20),
@@ -930,6 +933,63 @@ class _LatestInsightsSection extends ConsumerWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SCHEDULE A DA APPOINTMENT — CTA card, opens the dedicated screen
+// ═══════════════════════════════════════════════════════════════
+class _AppointmentSection extends StatelessWidget {
+  const _AppointmentSection();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Material(
+        borderRadius: BorderRadius.circular(18),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(18),
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const AppointmentScreen())),
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(colors: [AppColors.navy, AppColors.navyLight]),
+              borderRadius: BorderRadius.circular(18),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.15), shape: BoxShape.circle),
+                  child: const Icon(Icons.event_available_rounded, color: Colors.white, size: 22),
+                ),
+                const SizedBox(width: 14),
+                const Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Schedule a DA Appointment',
+                          style: TextStyle(color: Colors.white, fontSize: 14.5, fontWeight: FontWeight.w800)),
+                      SizedBox(height: 3),
+                      Text('Request time with a Designated Agent',
+                          style: TextStyle(color: Colors.white70, fontSize: 11.5)),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.15), shape: BoxShape.circle),
+                  child: const Icon(Icons.arrow_forward_rounded, color: Colors.white, size: 18),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

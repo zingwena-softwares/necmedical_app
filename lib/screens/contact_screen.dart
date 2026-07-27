@@ -6,6 +6,7 @@ import '../core/app_colors.dart';
 import '../models/office_contact.dart';
 import '../providers/wordpress_providers.dart';
 import '../widgets/skeleton_loaders.dart';
+import 'appointment_screen.dart';
 
 class ContactScreen extends ConsumerWidget {
   const ContactScreen({super.key});
@@ -74,6 +75,21 @@ class ContactScreen extends ConsumerWidget {
                 ),
                 icon: const Icon(Icons.mail_outline_rounded, size: 18),
                 label: const Text('Send an Inquiry'),
+              ),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const AppointmentScreen())),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: AppColors.navy,
+                  side: const BorderSide(color: AppColors.navy),
+                  padding: const EdgeInsets.symmetric(vertical: 13),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+                icon: const Icon(Icons.event_available_rounded, size: 18),
+                label: const Text('Schedule a DA Appointment'),
               ),
             ),
           ],

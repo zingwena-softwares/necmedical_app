@@ -26,16 +26,16 @@ class ApiClient {
       final response = await dio.get(path, queryParameters: query);
       return response.data;
     } on DioException catch (e) {
-      throw ApiException(_messageFor(e), statusCode: e.response?.statusCode);
+      throw ApiException(_messageFor(e), statusCode: e.response?.statusCode, data: e.response?.data);
     }
   }
 
   Future<dynamic> postJson(String path, {Object? data}) async {
     try {
-      final response = await dio.post(path, data: data);
+      final response = await dio.post(path, data: data, options: Options(contentType: Headers.jsonContentType));
       return response.data;
     } on DioException catch (e) {
-      throw ApiException(_messageFor(e), statusCode: e.response?.statusCode);
+      throw ApiException(_messageFor(e), statusCode: e.response?.statusCode, data: e.response?.data);
     }
   }
 
@@ -56,10 +56,13 @@ class ApiClient {
 }
 
 class ApiException implements Exception {
-  ApiException(this.message, {this.statusCode});
+  ApiException(this.message, {this.statusCode, this.data});
 
   final String message;
   final int? statusCode;
+  /// The raw decoded response body, when the server returned one (e.g. a
+  /// 422 validation error with structured per-field detail).
+  final dynamic data;
 
   @override
   String toString() => message;

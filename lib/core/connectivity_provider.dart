@@ -7,28 +7,33 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
 ///
 /// The raw [InternetConnection] stream can flip rapidly on flaky networks
 /// (wifi hand-off, captive portals, DNS blips), which would otherwise make
-/// the offline screen flash in and out. "Offline" is surfaced the instant
-/// it's detected, but a short stable window is required before switching
-/// back to "online" so the UI doesn't flicker while the connection is still
-/// settling.
+/// the offline screen flash in and out. Cold app start is the worst case —
+/// the very first reachability check can fail before the OS radio/DNS
+/// resolver has fully woken up, even though the connection is actually fine
+/// a moment later. So both transitions require a short stable window before
+/// they're surfaced: offline gets a short one (real disconnects still show
+/// quickly), online gets a longer one (avoids flicker while the connection
+/// is still settling).
 final connectivityProvider = StreamProvider<bool>((ref) {
   final controller = StreamController<bool>();
-  Timer? recoveryDebounce;
+  Timer? debounce;
 
   final subscription = InternetConnection().onStatusChange.listen((status) {
     final isOnline = status == InternetStatus.connected;
-    recoveryDebounce?.cancel();
+    debounce?.cancel();
     if (!isOnline) {
-      controller.add(false);
+      debounce = Timer(const Duration(milliseconds: 1500), () {
+        controller.add(false);
+      });
     } else {
-      recoveryDebounce = Timer(const Duration(milliseconds: 800), () {
+      debounce = Timer(const Duration(milliseconds: 800), () {
         controller.add(true);
       });
     }
   });
 
   ref.onDispose(() {
-    recoveryDebounce?.cancel();
+    debounce?.cancel();
     subscription.cancel();
     controller.close();
   });

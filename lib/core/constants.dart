@@ -11,6 +11,9 @@ class ApiConstants {
   // paths off this base via ApiClient — see wordpress_api_service.dart.
   static const String wpBaseUrl = 'https://necmedical.org.zw/wp-json/wp/v2';
 
+  // ---- LIVE NOW: custom "nec/v1" namespace (DA appointment form) ----
+  static const String necApiBaseUrl = 'https://necmedical.org.zw/wp-json/nec/v1';
+
   // ---- PENDING: Employer Portal (necmedical-portal.net) ----
   // TODO: replace with real API base once SanganaAfrica/portal owner responds.
   // Until then this WebView URL is used directly in employer_portal_screen.dart.
