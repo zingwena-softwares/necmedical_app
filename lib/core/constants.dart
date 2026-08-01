@@ -14,11 +14,11 @@ class ApiConstants {
   // ---- LIVE NOW: custom "nec/v1" namespace (DA appointment form) ----
   static const String necApiBaseUrl = 'https://necmedical.org.zw/wp-json/nec/v1';
 
-  // ---- PENDING: Employer Portal (necmedical-portal.net) ----
-  // TODO: replace with real API base once SanganaAfrica/portal owner responds.
-  // Until then this WebView URL is used directly in employer_portal_screen.dart.
-  static const String employerPortalWebUrl = 'https://necmedical-portal.net/login/';
-  static const String employerPortalApiBaseUrl = ''; // fill in when available
+  // ---- LIVE NOW (TEST environment): Employer Portal API ----
+  // Handed over by Ardent Tech via DEVELOPER_INTEGRATION_GUIDE.md (2026-07-22).
+  // TODO: swap to the production base URL + API key once Ardent Tech issues them.
+  static const String employerApiBaseUrl = 'https://test-api-dev.ardenttech.online/v1';
+  static const String employerApiKey = 'nec_aba45af39554854a35602e5cc04481eb5f63b3f7c2147e40';
 
   // ---- PENDING: Self-Service / Case Management (SanganaAfrica) ----
   // TODO: replace with real API base once SanganaAfrica responds.
