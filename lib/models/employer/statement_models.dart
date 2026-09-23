@@ -60,8 +60,9 @@ class StatementRow {
 class StatementsResult {
   final StatementSummary summary;
   final List<StatementRow> rows;
+  final String? currencyLabel;
 
-  StatementsResult({required this.summary, required this.rows});
+  StatementsResult({required this.summary, required this.rows, this.currencyLabel});
 
   factory StatementsResult.fromJson(Map<String, dynamic> json) {
     return StatementsResult(
@@ -69,6 +70,7 @@ class StatementsResult {
       rows: (json['rows'] as List<dynamic>? ?? [])
           .map((r) => StatementRow.fromJson(r as Map<String, dynamic>))
           .toList(),
+      currencyLabel: (json['filters'] as Map<String, dynamic>?)?['currency_label'] as String?,
     );
   }
 }

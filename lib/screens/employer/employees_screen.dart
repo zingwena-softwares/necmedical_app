@@ -6,6 +6,7 @@ import '../../core/employer_api_client.dart';
 import '../../models/employer/employee_model.dart';
 import '../../providers/employer/employer_data_providers.dart';
 import '../../providers/employer/employer_providers.dart';
+import '../../widgets/app_dialog.dart';
 import '../../widgets/shimmer_box.dart';
 import 'add_edit_employee_screen.dart';
 
@@ -44,21 +45,15 @@ class _EmployeesScreenState extends ConsumerState<EmployeesScreen> {
   }
 
   Future<void> _confirmDelete(Employee employee) async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('Remove employee?'),
-        content: Text('Remove ${employee.fullName} from your registered employees?'),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(dialogContext, false), child: const Text('Cancel')),
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext, true),
-            child: const Text('Remove', style: TextStyle(color: AppColors.badgeRed)),
-          ),
-        ],
-      ),
+    final confirmed = await AppDialog.confirm(
+      context,
+      title: 'Remove employee?',
+      message: 'Remove ${employee.fullName} from your registered employees?',
+      icon: Icons.person_remove_outlined,
+      confirmLabel: 'Remove',
+      destructive: true,
     );
-    if (confirmed != true) return;
+    if (!confirmed) return;
     try {
       final message = await ref.read(employerApiServiceProvider).deleteEmployee(employee.empId);
       if (!mounted) return;

@@ -9,7 +9,8 @@ class EmployerLoginScreen extends ConsumerStatefulWidget {
   const EmployerLoginScreen({super.key});
 
   @override
-  ConsumerState<EmployerLoginScreen> createState() => _EmployerLoginScreenState();
+  ConsumerState<EmployerLoginScreen> createState() =>
+      _EmployerLoginScreenState();
 }
 
 class _EmployerLoginScreenState extends ConsumerState<EmployerLoginScreen> {
@@ -38,7 +39,9 @@ class _EmployerLoginScreenState extends ConsumerState<EmployerLoginScreen> {
       _error = null;
     });
     try {
-      await ref.read(employerAuthProvider.notifier).login(username: username, password: password);
+      await ref
+          .read(employerAuthProvider.notifier)
+          .login(username: username, password: password);
     } on EmployerApiException catch (e) {
       setState(() => _error = e.message);
     } catch (e) {
@@ -52,99 +55,111 @@ class _EmployerLoginScreenState extends ConsumerState<EmployerLoginScreen> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: AppBar(title: const Text('Employer Portal')),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(colors: [AppColors.navy, AppColors.navyLight]),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    width: 52,
-                    height: 52,
-                    decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-                    child: const Icon(Icons.business_center_rounded, color: AppColors.navy, size: 26),
-                  ),
-                  const SizedBox(height: 12),
-                  const Text('Employer Portal',
-                      style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800)),
-                  const SizedBox(height: 4),
-                  const Text('Statements, returns, payments and employees',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white70, fontSize: 12)),
-                ],
-              ),
-            ),
-            const SizedBox(height: 24),
-            TextField(
-              controller: _usernameController,
-              textInputAction: TextInputAction.next,
-              decoration: employerFieldDecoration(context, label: 'Username', icon: Icons.person_outline_rounded),
-            ),
-            const SizedBox(height: 14),
-            TextField(
-              controller: _passwordController,
-              obscureText: _obscurePassword,
-              textInputAction: TextInputAction.done,
-              onSubmitted: (_) => _submit(),
-              decoration: employerFieldDecoration(
-                context,
-                label: 'Password',
-                icon: Icons.lock_outline_rounded,
-                suffixIcon: IconButton(
-                  icon: Icon(_obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined),
-                  onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+      backgroundColor: colorScheme.surfaceContainerLowest,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                padding: const EdgeInsets.fromLTRB(20, 14, 20, 20),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                      colors: [AppColors.navy, AppColors.navyLight]),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: const Icon(Icons.arrow_back_rounded,
+                              color: Colors.white),
+                          padding: EdgeInsets.zero,
+                          constraints:
+                              const BoxConstraints(minWidth: 36, minHeight: 36),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      width: 52,
+                      height: 52,
+                      decoration: const BoxDecoration(
+                          color: Colors.white, shape: BoxShape.circle),
+                      child: const Icon(Icons.business_center_rounded,
+                          color: AppColors.navy, size: 26),
+                    ),
+                    const SizedBox(height: 12),
+                    const Text('Employer Portal',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w800)),
+                    const SizedBox(height: 4),
+                    const Text('Statements, returns, payments and employees',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white70, fontSize: 12)),
+                  ],
                 ),
               ),
-            ),
-            if (_error != null) ...[
-              const SizedBox(height: 12),
-              Text(_error!, style: const TextStyle(color: AppColors.badgeRed, fontSize: 12.5)),
-            ],
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _submitting ? null : _submit,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.navy,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                elevation: 0,
+              const SizedBox(height: 24),
+              TextField(
+                controller: _usernameController,
+                textInputAction: TextInputAction.next,
+                decoration: employerFieldDecoration(context,
+                    label: 'Username', icon: Icons.person_outline_rounded),
               ),
-              child: _submitting
-                  ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                    )
-                  : const Text('Log In', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
-            ),
-            const SizedBox(height: 16),
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(color: AppColors.iconBgBlue, borderRadius: BorderRadius.circular(10)),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Icon(Icons.info_outline_rounded, size: 15, color: AppColors.iconBlue),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      'This is connected to the test environment. Test login: TEST001 / admin',
-                      style: TextStyle(fontSize: 11, color: colorScheme.onSurfaceVariant),
-                    ),
+              const SizedBox(height: 14),
+              TextField(
+                controller: _passwordController,
+                obscureText: _obscurePassword,
+                textInputAction: TextInputAction.done,
+                onSubmitted: (_) => _submit(),
+                decoration: employerFieldDecoration(
+                  context,
+                  label: 'Password',
+                  icon: Icons.lock_outline_rounded,
+                  suffixIcon: IconButton(
+                    icon: Icon(_obscurePassword
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined),
+                    onPressed: () =>
+                        setState(() => _obscurePassword = !_obscurePassword),
                   ),
-                ],
+                ),
               ),
-            ),
-          ],
+              if (_error != null) ...[
+                const SizedBox(height: 12),
+                Text(_error!,
+                    style: const TextStyle(
+                        color: AppColors.badgeRed, fontSize: 12.5)),
+              ],
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _submitting ? null : _submit,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.navy,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  elevation: 0,
+                ),
+                child: _submitting
+                    ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                            strokeWidth: 2, color: Colors.white),
+                      )
+                    : const Text('Log In',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700, fontSize: 15)),
+              ),
+            ],
+          ),
         ),
       ),
     );

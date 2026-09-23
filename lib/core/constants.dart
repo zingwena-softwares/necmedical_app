@@ -20,8 +20,10 @@ class ApiConstants {
   static const String employerApiBaseUrl = 'https://test-api-dev.ardenttech.online/v1';
   static const String employerApiKey = 'nec_aba45af39554854a35602e5cc04481eb5f63b3f7c2147e40';
 
-  // ---- PENDING: Self-Service / Case Management (SanganaAfrica) ----
-  // TODO: replace with real API base once SanganaAfrica responds.
-  static const String selfServiceWebUrl = 'https://selfservice.necmedical.org.zw/';
-  static const String selfServiceApiBaseUrl = ''; // fill in when available
+  // ---- LIVE NOW: Self-Service (case & report submission/tracking) ----
+  // Purpose-built public API behind selfservice.necmedical.org.zw (see
+  // "API (2).pdf", 2026-09-16) — NOT the same backend as employerApiBaseUrl
+  // above or the internal necmedical.necmas.com staff API. Case/report
+  // submission, tracking, and lookups need no token at all.
+  static const String selfServiceApiBaseUrl = 'https://selfservice.necmedical.org.zw/api/selfservice';
 }

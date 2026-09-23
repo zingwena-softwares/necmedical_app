@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/app_colors.dart';
 import '../../providers/employer/employer_data_providers.dart';
 import '../../providers/employer/employer_providers.dart';
+import '../../widgets/app_dialog.dart';
 import 'employees_screen.dart';
 import 'invoices_screen.dart';
 import 'payment_proofs_screen.dart';
@@ -174,24 +175,16 @@ class EmployerDashboardScreen extends ConsumerWidget {
     );
   }
 
-  void _confirmLogout(BuildContext context, WidgetRef ref) {
-    showDialog(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('Log out?'),
-        content: const Text('You\'ll need to log in again to access the Employer Portal.'),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(dialogContext), child: const Text('Cancel')),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(dialogContext);
-              ref.read(employerAuthProvider.notifier).logout();
-            },
-            child: const Text('Log Out', style: TextStyle(color: AppColors.badgeRed)),
-          ),
-        ],
-      ),
+  Future<void> _confirmLogout(BuildContext context, WidgetRef ref) async {
+    final confirmed = await AppDialog.confirm(
+      context,
+      title: 'Log out?',
+      message: 'You\'ll need to log in again to access the Employer Portal.',
+      icon: Icons.logout_rounded,
+      confirmLabel: 'Log Out',
+      destructive: true,
     );
+    if (confirmed) ref.read(employerAuthProvider.notifier).logout();
   }
 }
 

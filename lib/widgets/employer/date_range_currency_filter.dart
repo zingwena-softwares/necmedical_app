@@ -66,8 +66,8 @@ class DateRangeCurrencyFilter extends StatelessWidget {
               ),
             ),
             items: const [
-              DropdownMenuItem(value: 1, child: Text('Currency 1')),
-              DropdownMenuItem(value: 2, child: Text('Currency 2')),
+              DropdownMenuItem(value: 1, child: Text('ZWG')),
+              DropdownMenuItem(value: 2, child: Text('USD')),
             ],
             onChanged: (v) => onCurrencyChanged(v ?? 2),
           ),

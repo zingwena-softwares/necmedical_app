@@ -7,6 +7,7 @@ class ReturnRow {
   final String monthName;
   final int year;
   final int currency;
+  final String? currencyLabel;
   final int totalEmployees;
   final double employeeContributionTotal;
   final double employerContributionTotal;
@@ -19,6 +20,7 @@ class ReturnRow {
     required this.monthName,
     required this.year,
     required this.currency,
+    this.currencyLabel,
     required this.totalEmployees,
     required this.employeeContributionTotal,
     required this.employerContributionTotal,
@@ -33,6 +35,7 @@ class ReturnRow {
       monthName: json['month_name'] ?? '',
       year: json['year'] ?? 0,
       currency: json['currency'] ?? 0,
+      currencyLabel: json['currency_label'] as String?,
       totalEmployees: json['total_employees'] ?? 0,
       employeeContributionTotal: asDouble(json['employee_contribution_total']),
       employerContributionTotal: asDouble(json['employer_contribution_total']),
@@ -55,13 +58,15 @@ class ReturnsSummary {
 class ReturnsResult {
   final ReturnsSummary summary;
   final List<ReturnRow> rows;
+  final String? currencyLabel;
 
-  ReturnsResult({required this.summary, required this.rows});
+  ReturnsResult({required this.summary, required this.rows, this.currencyLabel});
 
   factory ReturnsResult.fromJson(Map<String, dynamic> json) {
     return ReturnsResult(
       summary: ReturnsSummary.fromJson(json['summary'] as Map<String, dynamic>),
       rows: (json['rows'] as List<dynamic>? ?? []).map((r) => ReturnRow.fromJson(r as Map<String, dynamic>)).toList(),
+      currencyLabel: (json['filters'] as Map<String, dynamic>?)?['currency_label'] as String?,
     );
   }
 }

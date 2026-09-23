@@ -67,13 +67,15 @@ class InvoicesSummary {
 class InvoicesResult {
   final InvoicesSummary summary;
   final List<InvoiceRow> rows;
+  final String? currencyLabel;
 
-  InvoicesResult({required this.summary, required this.rows});
+  InvoicesResult({required this.summary, required this.rows, this.currencyLabel});
 
   factory InvoicesResult.fromJson(Map<String, dynamic> json) {
     return InvoicesResult(
       summary: InvoicesSummary.fromJson(json['summary'] as Map<String, dynamic>),
       rows: (json['rows'] as List<dynamic>? ?? []).map((r) => InvoiceRow.fromJson(r as Map<String, dynamic>)).toList(),
+      currencyLabel: (json['filters'] as Map<String, dynamic>?)?['currency_label'] as String?,
     );
   }
 }

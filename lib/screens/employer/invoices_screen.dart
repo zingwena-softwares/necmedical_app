@@ -88,16 +88,30 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(color: AppColors.noticeCardBg, borderRadius: BorderRadius.circular(16)),
-                      child: Row(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: _summaryTile('Invoiced', result.summary.invoiceTotal, colorScheme),
-                          ),
-                          Expanded(
-                            child: _summaryTile('Paid', result.summary.amountPaid, colorScheme),
-                          ),
-                          Expanded(
-                            child: _summaryTile('Balance', result.summary.balanceTotal, colorScheme),
+                          if (result.currencyLabel != null) ...[
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                              decoration: BoxDecoration(color: AppColors.navy.withValues(alpha: 0.08), borderRadius: BorderRadius.circular(6)),
+                              child: Text(result.currencyLabel!,
+                                  style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: AppColors.navy)),
+                            ),
+                            const SizedBox(height: 12),
+                          ],
+                          Row(
+                            children: [
+                              Expanded(
+                                child: _summaryTile('Invoiced', result.summary.invoiceTotal, colorScheme),
+                              ),
+                              Expanded(
+                                child: _summaryTile('Paid', result.summary.amountPaid, colorScheme),
+                              ),
+                              Expanded(
+                                child: _summaryTile('Balance', result.summary.balanceTotal, colorScheme),
+                              ),
+                            ],
                           ),
                         ],
                       ),

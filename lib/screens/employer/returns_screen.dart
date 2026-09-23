@@ -67,8 +67,8 @@ class _ReturnsScreenState extends ConsumerState<ReturnsScreen> {
                     isExpanded: true,
                     decoration: employerFieldDecoration(context, label: 'Currency'),
                     items: const [
-                      DropdownMenuItem(value: 1, child: Text('Currency 1')),
-                      DropdownMenuItem(value: 2, child: Text('Currency 2')),
+                      DropdownMenuItem(value: 1, child: Text('ZWG')),
+                      DropdownMenuItem(value: 2, child: Text('USD')),
                     ],
                     onChanged: (v) => setState(() => _currency = v ?? 2),
                   ),
@@ -126,8 +126,15 @@ class _ReturnsScreenState extends ConsumerState<ReturnsScreen> {
                                     ],
                                   ),
                                 ),
-                                Text(r.grandTotal.toStringAsFixed(2),
-                                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: AppColors.navy)),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(r.grandTotal.toStringAsFixed(2),
+                                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: AppColors.navy)),
+                                    if (r.currencyLabel != null)
+                                      Text(r.currencyLabel!, style: TextStyle(fontSize: 9.5, color: colorScheme.onSurfaceVariant)),
+                                  ],
+                                ),
                                 const SizedBox(width: 6),
                                 Icon(Icons.chevron_right_rounded, size: 18, color: colorScheme.onSurfaceVariant),
                               ],

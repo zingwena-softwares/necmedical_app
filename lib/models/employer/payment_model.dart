@@ -52,13 +52,15 @@ class PaymentsSummary {
 class PaymentsResult {
   final PaymentsSummary summary;
   final List<PaymentRow> rows;
+  final String? currencyLabel;
 
-  PaymentsResult({required this.summary, required this.rows});
+  PaymentsResult({required this.summary, required this.rows, this.currencyLabel});
 
   factory PaymentsResult.fromJson(Map<String, dynamic> json) {
     return PaymentsResult(
       summary: PaymentsSummary.fromJson(json['summary'] as Map<String, dynamic>),
       rows: (json['rows'] as List<dynamic>? ?? []).map((r) => PaymentRow.fromJson(r as Map<String, dynamic>)).toList(),
+      currencyLabel: (json['filters'] as Map<String, dynamic>?)?['currency_label'] as String?,
     );
   }
 }

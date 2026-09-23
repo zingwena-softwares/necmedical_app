@@ -97,6 +97,15 @@ class _PaymentsScreenState extends ConsumerState<PaymentsScreen> {
                       child: Row(
                         children: [
                           Text('Total Paid', style: TextStyle(fontSize: 11, color: colorScheme.onSurfaceVariant)),
+                          if (result.currencyLabel != null) ...[
+                            const SizedBox(width: 8),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                              decoration: BoxDecoration(color: AppColors.navy.withValues(alpha: 0.08), borderRadius: BorderRadius.circular(6)),
+                              child: Text(result.currencyLabel!,
+                                  style: const TextStyle(fontSize: 9.5, fontWeight: FontWeight.w700, color: AppColors.navy)),
+                            ),
+                          ],
                           const Spacer(),
                           Text(result.summary.totalAmount.toStringAsFixed(2),
                               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppColors.tealDark)),

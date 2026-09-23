@@ -136,8 +136,8 @@ class _SubmitReturnScreenState extends ConsumerState<SubmitReturnScreen> {
                   isExpanded: true,
                   decoration: employerFieldDecoration(context, label: 'Currency', icon: Icons.attach_money_rounded),
                   items: const [
-                    DropdownMenuItem(value: 1, child: Text('Currency 1')),
-                    DropdownMenuItem(value: 2, child: Text('Currency 2')),
+                    DropdownMenuItem(value: 1, child: Text('ZWG')),
+                    DropdownMenuItem(value: 2, child: Text('USD')),
                   ],
                   onChanged: (v) => setState(() => _currency = v ?? 2),
                 ),

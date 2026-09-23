@@ -66,7 +66,10 @@ class EmployerApiService {
       'currency': currency,
       if (emailTo != null && emailTo.isNotEmpty) 'email_to': emailTo,
     });
-    return (response as Map<String, dynamic>)['message'] as String? ?? 'Statement emailed.';
+    if (response is! Map<String, dynamic>) {
+      throw EmployerApiException('The server didn\'t confirm the email was sent. Please try again shortly.');
+    }
+    return response['message'] as String? ?? 'Statement emailed.';
   }
 
   // ---- Returns ----
